@@ -9,9 +9,11 @@ defmodule Arduiner.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      ArduinerWeb.Endpoint
+      ArduinerWeb.Endpoint,
       # Starts a worker by calling: Arduiner.Worker.start_link(arg)
       # {Arduiner.Worker, arg},
+      #Circuits.UART,
+      {Arduiner.Servers.SerialPortServer, "ttyACM0"}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
