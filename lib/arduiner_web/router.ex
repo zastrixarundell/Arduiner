@@ -19,6 +19,13 @@ defmodule ArduinerWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/led", ArduinerWeb do
+    pipe_through :browser
+
+    post "/on", LedController, :create
+    delete "/off", LedController, :delete
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ArduinerWeb do
   #   pipe_through :api
