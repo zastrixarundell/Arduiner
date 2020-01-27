@@ -6,7 +6,7 @@ defmodule Arduiner.Servers.SerialPortServer do
 
   def start_link(_), do: GenServer.start_link(__MODULE__, nil, name: __MODULE__)
 
-  def write_message_to_port(message), do: GenServer.cast(__MODULE__, {:send_message, message})
+  def write_message_to_port(message), do: GenServer.call(__MODULE__, {:send_message, message})
 
   def get_port, do: GenServer.call(__MODULE__, {:get_port})
 
@@ -23,12 +23,11 @@ defmodule Arduiner.Servers.SerialPortServer do
     {:noreply, %{port: nil, pid: nil}}
   end
 
-  def handle_cast({:send_message, message}, state) do
-    case Port.write(state.pid, message) do
-      {:error, _} ->
-        {:stop, :port_unavailable, state}
-      :ok ->  
-        {:noreply, state}
+  def handle_call({:send_message, message}, _from, state) do
+    if Port.write(state.pid, message) == :ok do
+      {:reply, :ok, state}
+    else  
+      {:reply, :error, state}
     end
   end
 
@@ -47,7 +46,7 @@ defmodule Arduiner.Servers.SerialPortServer do
     state = %{state | pid: pid}
 
     if Port.open(state.pid, port, speed: 9600, active: false) == :ok do
-      {:reply, :ok, Map.put(state, :port, port)}
+      {:reply, :ok, %{state | port: port}}
     else
       {:reply, :error, state}
     end
