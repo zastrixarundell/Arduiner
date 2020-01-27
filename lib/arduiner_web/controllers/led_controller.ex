@@ -4,6 +4,7 @@ defmodule ArduinerWeb.LedController do
 
   def create(conn, _params) do
     Server.write_message_to_port("start")
+
     conn
     |> put_flash(:info, "Started LED on the Arduino!")
     |> redirect(to: Routes.page_path(conn, :index))
@@ -11,6 +12,7 @@ defmodule ArduinerWeb.LedController do
 
   def delete(conn, _params) do
     Server.write_message_to_port("stop")
+    
     conn
     |> put_flash(:info, "Stopped LED on the Arduino!")
     |> redirect(to: Routes.page_path(conn, :index))
