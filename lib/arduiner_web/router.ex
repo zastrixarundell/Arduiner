@@ -30,6 +30,7 @@ defmodule ArduinerWeb.Router do
     pipe_through :browser
 
     post "/connect", ArduinoController, :create
+    delete "/disconnect", ArduinoController, :delete
   end
 
   # Other scopes may use custom stacks.

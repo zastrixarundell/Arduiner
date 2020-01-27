@@ -1,19 +1,26 @@
-<section class="phx-hero">
-  <h1><%= gettext "Connected to the device on port: %{port}", port: "define" %></h1>
-</section>
-
 <section class="row">
   <article class="column">
-    <h2>LED methods</h2>
-    <%= form_for @conn, Routes.led_path(@conn, :create), fn _f -> %>
-      <%= submit "Enable" %>
-    <% end %>
-    <%= form_for @conn, Routes.led_path(@conn, :delete), [method: :delete], fn _f -> %>
-      <%= submit "Disable" %>
-    <% end %>
-    <%= form_for @conn, Routes.arduino_path(@conn, :create), [as: :selection], fn f -> %>
-      <%= select f, :port, @ports %>
-      <%= submit "Connect to this port" %>
+    <%= if already_connected? do %>
+      <h2>LED methods</h2>
+      <%= form_for @conn, Routes.led_path(@conn, :create), fn _f -> %>
+        <%= submit "Enable" %>
+      <% end %>
+      <%= form_for @conn, Routes.led_path(@conn, :delete), [method: :delete], fn _f -> %>
+        <%= submit "Disable" %>
+      <% end %>
+    <%= else %>
+      <%= form_for @conn, Routes.arduino_path(@conn, :create), [as: :selection], fn f -> %>
+        <%= select f, :port, @ports %>
+        <%= submit "Connect to this port" %>
+      <% end %>
     <% end %>
   </article>
+  <%= if already_connected? do %>
+    <article class="column">
+      <h2>Arduino Controls</h2>
+      <%= form_for @conn, Routes.arduino_path(@conn, :delete), [method: :delete], fn _f -> %>
+        <%= submit "Disconnect" %>
+      <% end %>
+    </article>
+  <% end %>
 </section>

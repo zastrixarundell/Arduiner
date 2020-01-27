@@ -33,6 +33,8 @@ defmodule ArduinerWeb do
         root: "lib/arduiner_web/templates",
         namespace: ArduinerWeb
 
+      def already_connected?, do: !!Arduiner.Servers.SerialPortServer.get_port
+
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
 
@@ -64,6 +66,7 @@ defmodule ArduinerWeb do
   When used, dispatch to the appropriate controller/view/etc.
   """
   defmacro __using__(which) when is_atom(which) do
+
     apply(__MODULE__, which, [])
   end
 end

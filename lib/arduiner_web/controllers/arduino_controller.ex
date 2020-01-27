@@ -28,4 +28,13 @@ defmodule ArduinerWeb.ArduinoController do
     |> put_flash(response.atom, response.message)
     |> redirect(to: Routes.page_path(conn, :index))
   end
+
+  def delete(conn, _params) do
+
+    Server.stop
+
+    conn
+    |> put_flash(:info, "Disconnected the Arduino controller")
+    |> redirect(to: Routes.page_path(conn, :index))
+  end
 end
