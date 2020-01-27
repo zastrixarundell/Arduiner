@@ -1,5 +1,5 @@
 <section class="phx-hero">
-  <h1><%= gettext "Connected to the device on port: %{port}", port: @port %></h1>
+  <h1><%= gettext "Connected to the device on port: %{port}", port: "define" %></h1>
 </section>
 
 <section class="row">
@@ -10,6 +10,10 @@
     <% end %>
     <%= form_for @conn, Routes.led_path(@conn, :delete), [method: :delete], fn _f -> %>
       <%= submit "Disable" %>
+    <% end %>
+    <%= form_for @conn, Routes.arduino_path(@conn, :create), [as: :selection], fn f -> %>
+      <%= select f, :port, @ports %>
+      <%= submit "Connect to this port" %>
     <% end %>
   </article>
 </section>

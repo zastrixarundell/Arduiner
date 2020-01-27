@@ -3,6 +3,11 @@ defmodule ArduinerWeb.PageController do
   alias Arduiner.Servers.SerialPortServer, as: Server
 
   def index(conn, _params) do
-    render(conn, "index.html", port: Server.get_port)
+    all_data = Circuits.UART.enumerate
+
+    ports =
+      Enum.map all_data, fn({name, data}) -> name end
+
+    render(conn, "index.html", ports: ports)
   end
 end

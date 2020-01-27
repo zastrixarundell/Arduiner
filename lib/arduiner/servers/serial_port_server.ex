@@ -4,21 +4,19 @@ defmodule Arduiner.Servers.SerialPortServer do
 
   # Client side API
 
-  def start_link(port), do: GenServer.start_link(__MODULE__, port, name: __MODULE__)
+  def start_link(_), do: GenServer.start_link(__MODULE__, [], name: __MODULE__)
 
   def write_message_to_port(message), do: GenServer.cast(__MODULE__, {:send_message, message})
 
   def get_port, do: GenServer.call(__MODULE__, {:get_port})
 
+  def connect_to_port(port), do: GenServer.call(__MODULE__, {:connect, port})
+
   # Server code
 
-  def init(port) do
+  def init(_) do
     {:ok, pid} = Port.start_link
-    if Port.open(pid, port, speed: 9600, active: false) == :ok do
-      {:ok, %{port: port, pid: pid}}
-    else
-      {:stop, "Failed to start the port #{port}"}
-    end
+    {:ok, %{pid: pid}}
   end
 
   def handle_cast({:send_message, message}, state) do
@@ -27,6 +25,14 @@ defmodule Arduiner.Servers.SerialPortServer do
         {:stop, :port_unavailable, state}
       :ok ->  
         {:noreply, state}
+    end
+  end
+
+  def handle_call({:connect, port}, _from, state) do
+    if Port.open(state.pid, port, speed: 9600, active: false) == :ok do
+      {:reply, :ok, Map.put(state, :port, port)}
+    else
+      {:reply, :error, state}
     end
   end
 

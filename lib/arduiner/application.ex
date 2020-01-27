@@ -13,7 +13,7 @@ defmodule Arduiner.Application do
       # Starts a worker by calling: Arduiner.Worker.start_link(arg)
       # {Arduiner.Worker, arg},
       #Circuits.UART,
-      {Arduiner.Servers.SerialPortServer, "ttyACM0"}
+      {Arduiner.Servers.SerialPortServer, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

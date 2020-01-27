@@ -26,6 +26,12 @@ defmodule ArduinerWeb.Router do
     delete "/off", LedController, :delete
   end
 
+  scope "/arduino", ArduinerWeb do
+    pipe_through :browser
+
+    post "/connect", ArduinoController, :create
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ArduinerWeb do
   #   pipe_through :api
