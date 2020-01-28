@@ -1,5 +1,9 @@
-<%= form_for @conn, Routes.arduino_path(@conn, :create), [as: :selection], fn f -> %>
-  <%= select f, :port, @ports %>
-  <%= select f, :rate, [300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200], value: "115200" %>
-  <%= submit "Connect to this port" %>
+<%= form_for @conn, Routes.arduino_path(@conn, :create), [as: :selection, class: "row"], fn f -> %>
+  <%= select f, :port, @ports, class: "column" %>
+  <%= select f, :rate, [300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200], value: "115200", class: "column" %>
+  <%= submit "Connect to this port", class: "column" %>
+<% end %>
+
+<%= for device <- @devices do %>
+<pre><code><%="#{device}" %></code></pre>
 <% end %>

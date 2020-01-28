@@ -10,7 +10,13 @@ defmodule ArduinerWeb.ArduinoController do
     ports =
       Enum.map all_data, fn({name, _data}) -> name end
 
-    render(conn, "new.html", ports: ports)
+    devices =
+      Enum.map all_data, fn({name, data}) ->
+        description = Map.get(data, :description) || "unindentified"
+        "#{name}: #{description}"
+      end
+
+    render(conn, "new.html", ports: ports, devices: devices)
   end
 
   def create(conn, opts) do

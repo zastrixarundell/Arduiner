@@ -5,13 +5,13 @@
       <%= submit "Enable" %>
     <% end %>
     <%= form_for @conn, Routes.led_path(@conn, :delete), [method: :delete], fn _f -> %>
-      <%= submit "Disable" %>
+      <%= submit "Disable", class: "button-outline"%>
     <% end %>
   </article>
     <article class="column">
       <h2>Arduino Controls</h2>
       <%= form_for @conn, Routes.arduino_path(@conn, :delete), [method: :delete], fn _f -> %>
-        <%= submit "Disconnect" %>
+        <%= submit "Disconnect", class: "button-outline" %>
       <% end %>
     </article>
 </section>

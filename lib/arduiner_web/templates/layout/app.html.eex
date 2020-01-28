@@ -10,7 +10,7 @@
   <body>
     <header>
       <section class="container">
-        <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
+        <img style="display: block; margin-left: auto; margin-right: auto; width:50%; height: 50%; padding-bottom: 20px; padding-top: 20px" src="<%= Routes.static_path(@conn, "/images/arduino.png") %>" alt="Arduino Logo"/>
       </section>
     </header>
     <main role="main" class="container">
