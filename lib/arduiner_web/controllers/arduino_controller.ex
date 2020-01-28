@@ -2,7 +2,16 @@ defmodule ArduinerWeb.ArduinoController do
   use ArduinerWeb, :controller
   alias Arduiner.Servers.SerialPortServer, as: Server
 
-  use Supervisor
+  plug Arduiner.Plugs.ArduinoPlug, :create when action not in [:delete]
+
+  def new(conn, _opts) do
+    all_data = Circuits.UART.enumerate
+
+    ports =
+      Enum.map all_data, fn({name, data}) -> name end
+
+    render(conn, "new.html", ports: ports)
+  end
 
   def create(conn, opts) do
     %{"selection" => selection} = opts
@@ -23,6 +32,6 @@ defmodule ArduinerWeb.ArduinoController do
 
     conn
     |> put_flash(:info, "Disconnected the Arduino controller")
-    |> redirect(to: Routes.page_path(conn, :index))
+    |> redirect(to: Routes.arduino_path(conn, :new))
   end
 end

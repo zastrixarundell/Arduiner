@@ -29,6 +29,7 @@ defmodule ArduinerWeb.Router do
   scope "/arduino", ArduinerWeb do
     pipe_through :browser
 
+    get "/", ArduinoController, :new
     post "/connect", ArduinoController, :create
     delete "/disconnect", ArduinoController, :delete
   end

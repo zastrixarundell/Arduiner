@@ -1,27 +1,17 @@
 <section class="row">
   <article class="column">
-    <%= if already_connected? do %>
-      <h2>LED methods</h2>
-      <%= form_for @conn, Routes.led_path(@conn, :create), fn _f -> %>
-        <%= submit "Enable" %>
-      <% end %>
-      <%= form_for @conn, Routes.led_path(@conn, :delete), [method: :delete], fn _f -> %>
-        <%= submit "Disable" %>
-      <% end %>
-    <%= else %>
-      <%= form_for @conn, Routes.arduino_path(@conn, :create), [as: :selection], fn f -> %>
-        <%= select f, :port, @ports %>
-        <%= select f, :rate, [300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200], value: "115200" %>
-        <%= submit "Connect to this port" %>
-      <% end %>
+    <h2>LED methods</h2>
+    <%= form_for @conn, Routes.led_path(@conn, :create), fn _f -> %>
+      <%= submit "Enable" %>
+    <% end %>
+    <%= form_for @conn, Routes.led_path(@conn, :delete), [method: :delete], fn _f -> %>
+      <%= submit "Disable" %>
     <% end %>
   </article>
-  <%= if already_connected? do %>
     <article class="column">
       <h2>Arduino Controls</h2>
       <%= form_for @conn, Routes.arduino_path(@conn, :delete), [method: :delete], fn _f -> %>
         <%= submit "Disconnect" %>
       <% end %>
     </article>
-  <% end %>
 </section>

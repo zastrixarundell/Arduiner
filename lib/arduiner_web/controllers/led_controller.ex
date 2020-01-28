@@ -3,7 +3,7 @@ defmodule ArduinerWeb.LedController do
   alias Arduiner.Servers.SerialPortServer, as: Server
 
   def create(conn, _params) do
-    
+
     response =
       if Server.write_message_to_port("start"),
         do: %{atom: :info, message: "Started the LED on the Arduino!"},
