@@ -8,7 +8,7 @@ defmodule ArduinerWeb.ArduinoController do
     all_data = Circuits.UART.enumerate
 
     ports =
-      Enum.map all_data, fn({name, data}) -> name end
+      Enum.map all_data, fn({name, _data}) -> name end
 
     render(conn, "new.html", ports: ports)
   end
