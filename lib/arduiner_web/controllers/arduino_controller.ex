@@ -7,22 +7,11 @@ defmodule ArduinerWeb.ArduinoController do
   def create(conn, opts) do
     %{"selection" => selection} = opts
     %{"port" => port, "rate" => rate} = selection
-    
-
-    enabled = (Server.connect_to_port(port, rate) == :ok)
 
     response =
-      if enabled do
-        %{
-          atom: :info,
-          message: "Started SPS on #{port}!"
-        }
-      else
-        %{
-          atom: :error,
-          message: "Failed to start SPS on #{port}!"
-        }
-      end 
+      if Server.connect_to_port(port, rate) == :ok,
+        do: %{ atom: :info, message: "Started SPS on #{port}!"},
+        else: %{ atom: :error, message: "Failed to start SPS on #{port}!"}
       
   
     conn
