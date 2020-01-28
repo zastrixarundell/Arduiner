@@ -5,7 +5,7 @@ defmodule ArduinerWeb.LedController do
   def create(conn, _params) do
 
     response =
-      if Server.write_message_to_port("start"),
+      if Server.write_message_to_port("start") == :ok,
         do: %{atom: :info, message: "Started the LED on the Arduino!"},
         else: %{atom: :error, message: "Failed to start the LED on the Arduino!"}
 

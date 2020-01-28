@@ -49,10 +49,14 @@ defmodule Arduiner.Servers.SerialPortServer do
 
   @doc false
   def handle_call({:send_message, message}, _from, state) do
-    if Port.write(state.pid, message) == :ok do
-      {:reply, :ok, state}
-    else  
+    if !state.pid do
       {:reply, :error, state}
+    else
+      if Port.write(state.pid, message) == :ok do
+        {:reply, :ok, state}
+      else  
+        {:reply, :error, state}
+      end
     end
   end
 
