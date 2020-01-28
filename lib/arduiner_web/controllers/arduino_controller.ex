@@ -15,12 +15,12 @@ defmodule ArduinerWeb.ArduinoController do
       if enabled do
         %{
           atom: :info,
-          message: "Started SerialPortServer on #{port}!"
+          message: "Started SPS on #{port}!"
         }
       else
         %{
           atom: :error,
-          message: "Failed to start SerialPortServer on #{port}!"
+          message: "Failed to start SPS on #{port}!"
         }
       end 
       
