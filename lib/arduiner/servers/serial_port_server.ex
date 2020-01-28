@@ -10,7 +10,7 @@ defmodule Arduiner.Servers.SerialPortServer do
 
   def get_port, do: GenServer.call(__MODULE__, {:get_port})
 
-  def connect_to_port(port), do: GenServer.call(__MODULE__, {:connect, port})
+  def connect_to_port(port, rate), do: GenServer.call(__MODULE__, {:connect, port, rate})
 
   def stop, do: GenServer.cast(__MODULE__, {:stop_port})
 
@@ -31,7 +31,7 @@ defmodule Arduiner.Servers.SerialPortServer do
     end
   end
 
-  def handle_call({:connect, port}, _from, state) do
+  def handle_call({:connect, port, rate}, _from, state) do
 
     state =
       if state.pid do
@@ -45,7 +45,11 @@ defmodule Arduiner.Servers.SerialPortServer do
 
     state = %{state | pid: pid}
 
-    if Port.open(state.pid, port, speed: 9600, active: false) == :ok do
+    {rate, _} = Integer.parse(rate)
+
+    IO.inspect rate
+
+    if Port.open(state.pid, port, speed: rate, active: false) == :ok do
       {:reply, :ok, %{state | port: port}}
     else
       {:reply, :error, state}

@@ -6,9 +6,10 @@ defmodule ArduinerWeb.ArduinoController do
 
   def create(conn, opts) do
     %{"selection" => selection} = opts
-    %{"port" => port} = selection
+    %{"port" => port, "rate" => rate} = selection
+    
 
-    enabled = (Server.connect_to_port(port) == :ok)
+    enabled = (Server.connect_to_port(port, rate) == :ok)
 
     response =
       if enabled do
