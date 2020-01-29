@@ -26,6 +26,34 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+## How does the code look like on the Arduino's side?
+For this project I am using a copy of an Arduino Pro Micro which is connected as an Arduino Leonardo. The code is use is:
+
+```arduino
+void setup()
+{
+  Serial.begin(115200);
+  Serial.setTimeout(100);
+  while(!Serial.available());
+  Serial.write("Started application!");
+}
+
+void loop()
+{
+  if (Serial.available() > 0)
+  {
+    String input = Serial.readString();
+
+    if (input == "start")
+      TXLED1;
+
+    if (input == "stop")
+      TXLED0;
+  }
+}
+```
+
+
 ## Learn more
 
   * Official website: http://www.phoenixframework.org/
