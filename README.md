@@ -27,7 +27,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 ## How does the code look like on the Arduino's side?
-For this project I am using a copy of an Arduino Pro Micro which is connected as an Arduino Leonardo. The code is use is:
+For this project I am using a copy of an Arduino Pro Micro which is connected as an Arduino Leonardo. The code in use is:
 
 ```arduino
 void setup()
